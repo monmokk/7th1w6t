@@ -1,10 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
+    <!-- Bootstrap CSS -->
+    <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+            crossorigin="anonymous"
+    />
+    <!--    font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&display=swap"
+          rel="stylesheet">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"
+    ></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"
+    ></script>
+
+    <title>스파르타코딩클럽 | 부트스트랩 연습하기</title>
+    <style>
+        * {
+            font-family: 'Nanum Gothic Coding', monospace;
+        }
+
+        .jumbotron {
+            background-color: beige;
+            text-align: center;
+            position: relative;
+        }
+
+        .jumbotron h1 {
+            margin-bottom: 20px;
+        }
+
+        .wrap {
+            max-width: 900px;
+            margin:0px auto;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 30px;
+            /*justify-content: space-around;*/
+        }
+
+        .card {
+
+            width: 250px;
+            height: 300px;
+            margin: 10px 20px 10px 10px;
+            border-radius: 10px;
+        }
+
+        .card_img {
+            display: block;
+            width: 250px;
+            height: 200px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .card_desc{
+            max-height: 140px;
+            padding: 5px;
+
+        }
+        .card_desc ul{
+            list-style-type: none;
+            position: relative;
+            left: -36px;
+        }
+        .card_desc_btn{
+            background-color: transparent;
+
+            width: 100px;
+            border: none;
+            position: relative;
+            top: -10px;
+            left: 70px;
+        }
+
+        .card_desc_btn a{
+            color:black;
+            text-decoration: none;
+        }
+
+        .navbar {
+            position: absolute;
+            right: 3px;
+            top: -5px;
+
+        }
+
+        .nav-link {
+            color: black;
+        }
+        .add_btn {
+            background-color: transparent;
+            border-radius: 30px;
+            width: 100px;
+            border: black 1px solid;
+            position: relative;
+            top:20px
+        }
+        .add_btn a{
+            color:black;
+            text-decoration: none;
+
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="jumbotron jumbotron-fluid">
+    <div class="navbar">
+     <ul class="nav justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link" href="#">회원가입</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">로그인</a>
+        </li>
+
+    </ul>
+    </div>
+
+    <div class="container">
+        <h1 class="display-4">함께할개</h1>
+        <p class="lead">소중한 가족을 찾아보세요.</p>
+    </div>
+    <div>
+        <button class="add_btn"><a href="#">등록</a></button>
+    </div>
+</div>
+<div class="wrap">
+    <div class="card">
+        <img
+                src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY3aDZeHtNYORvZY2BK-KXe2buuFi05k28UhCKvh5zGHT2llKD8hD1Zghm-PRZUdQeQ8s&usqp=CAU"
+                alt="" class="card_img">
+        <div class="card_desc">
+            <h4>골든리트리버</h4>
+            <ul>
+                <li>
+                    이름:
+                </li>
+                 <li>
+                    나이:
+                </li>
+            </ul>
+            <button class="card_desc_btn"><a href="#">더보기</a></button>
+        </div>
+    </div>
+    <div class="card">
+        <img
+                src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY3aDZeHtNYORvZY2BK-KXe2buuFi05k28UhCKvh5zGHT2llKD8hD1Zghm-PRZUdQeQ8s&usqp=CAU"
+                alt="" class="card_img">
+        <div class="card_desc">
+            <h4>골든리트리버</h4>
+            <ul>
+                <li>
+                    이름:
+                </li>
+                 <li>
+                    나이:
+                </li>
+            </ul>
+            <button class="card_desc_btn"><a href="#">더보기</a></button>
+        </div>
+    </div>
+    <div class="card">
+        <img
+                src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY3aDZeHtNYORvZY2BK-KXe2buuFi05k28UhCKvh5zGHT2llKD8hD1Zghm-PRZUdQeQ8s&usqp=CAU"
+                alt="" class="card_img">
+        <div class="card_desc">
+            <h4>골든리트리버</h4>
+            <ul>
+                <li>
+                    이름:
+                </li>
+                 <li>
+                    나이:
+                </li>
+            </ul>
+            <button class="card_desc_btn"><a href="#">더보기</a></button>
+        </div>
+    </div>
+    <div class="card">
+        <img
+                src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY3aDZeHtNYORvZY2BK-KXe2buuFi05k28UhCKvh5zGHT2llKD8hD1Zghm-PRZUdQeQ8s&usqp=CAU"
+                alt="" class="card_img">
+        <div class="card_desc">
+            <h4>골든리트리버</h4>
+            <ul>
+                <li>
+                    이름:
+                </li>
+                 <li>
+                    나이:
+                </li>
+            </ul>
+            <button class="card_desc_btn"><a href="#">더보기</a></button>
+        </div>
+    </div>
+    <div class="card">
+        <img
+                src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY3aDZeHtNYORvZY2BK-KXe2buuFi05k28UhCKvh5zGHT2llKD8hD1Zghm-PRZUdQeQ8s&usqp=CAU"
+                alt="" class="card_img">
+        <div class="card_desc">
+            <h4>골든리트리버</h4>
+            <ul>
+                <li>
+                    이름:
+                </li>
+                 <li>
+                    나이:
+                </li>
+            </ul>
+            <button class="card_desc_btn"><a href="#">더보기</a></button>
+        </div>
+    </div>
+    <div class="card">
+        <img
+                src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY3aDZeHtNYORvZY2BK-KXe2buuFi05k28UhCKvh5zGHT2llKD8hD1Zghm-PRZUdQeQ8s&usqp=CAU"
+                alt="" class="card_img">
+        <div class="card_desc">
+            <h4>골든리트리버</h4>
+            <ul>
+                <li>
+                    이름:
+                </li>
+                 <li>
+                    나이:
+                </li>
+            </ul>
+            <button class="card_desc_btn"><a href="#">더보기</a></button>
+        </div>
+    </div>
+
+</div>
 </body>
 </html>
