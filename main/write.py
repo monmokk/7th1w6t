@@ -13,6 +13,10 @@ blue_write = Blueprint("write", __name__, template_folder='templates')
 
 dogTypeList = list()
 
+@blue_write.route('/header')
+def header():
+    return render_template('header.html')
+
 @blue_write.route("/write")
 def write():
     return render_template('write.html')
