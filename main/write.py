@@ -17,10 +17,6 @@ dogTypeList = list()
 def header():
     return render_template('header.html')
 
-@blue_write.route("/write")
-def write():
-    return render_template('write.html')
-
 def findDogType():
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
@@ -36,15 +32,17 @@ def findDogType():
                 break
             else:
                 dogTypeList.append(dogType.text)
-
     return dogTypeList
 
 findDogType()
 
-@blue_write.route('/writing', methods=['GET'])
-def writing():
-    return jsonify({'dogTypes':dogTypeList})
+@blue_write.route("/write")
+def write():
+    return render_template('write.html', dogTypes=dogTypeList)
 
+@blue_write.route("/write/<idx>")
+def detailPage(idx):
+    return render_template('detailWrite.html', idx=idx)
 
 @blue_write.route('/posting', methods=['POST'])
 def posting():
@@ -59,7 +57,6 @@ def posting():
     withKids_receive = request.form["withKids_give"]
     explain_receive = request.form["explain_give"]
 
-
     extension = file.filename.split('.')[-1]
     today = datetime.now()
     my_time = today.strftime('%Y-%m-%d-%H-%M-%S')
@@ -69,18 +66,18 @@ def posting():
     file.save(save_to)
 
     doc = {
-        'file' :f'{filename}.{extension}',
-        'name' :name_receive,
-        'age' :age_receive ,
-        'dogType' :dogType_receive,
-        'character' :character_receive,
-        'fromLocation' :fromLocation_receive,
-        'toLocation' :toLocation_receive,
-        'withDog' :withDog_receive,
-        'withKids' :withKids_receive,
-        'explain' :explain_receive
+        'file':f'{filename}.{extension}',
+        'name':name_receive,
+        'age':age_receive ,
+        'dogType':dogType_receive,
+        'character':character_receive,
+        'fromLocation':fromLocation_receive,
+        'toLocation':toLocation_receive,
+        'withDog':withDog_receive,
+        'withKids':withKids_receive,
+        'explain':explain_receive
     }
 
     db.dog.insert_one(doc)
 
-    return jsonify({'msg' : '등록완료'})
+    return jsonify({'msg' : f'"{name_receive}" 정보 등록완료'})
