@@ -77,6 +77,6 @@ def posting():
         'explain' :explain_receive
     }
 
-    db.users.insert_one(doc)
-    
+    db.dog.insert_one(doc)
+
     return jsonify({'msg' : '등록완료'})
