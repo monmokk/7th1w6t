@@ -32,11 +32,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
 
     <script>
-
-        $(document).ready(function () {
-            $("#header").load("header");
-        })
-
         let loadFile = function (event) {
             let img_file = document.getElementById('img_file');
             img_file.src = URL.createObjectURL(event.target.files[0]);
@@ -134,7 +129,9 @@
 </head>
 <body>
 <div class="wrap">
-    <div id="header"></div>
+
+{% include "header.html" %}
+
     <section class="section">
         <div class="container bd-example">
             <div class="mb-3">

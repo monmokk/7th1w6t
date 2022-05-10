@@ -13,10 +13,6 @@ blue_write = Blueprint("write", __name__, template_folder='templates')
 
 dogTypeList = list()
 
-@blue_write.route('/header')
-def header():
-    return render_template('header.html')
-
 def findDogType():
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
@@ -40,9 +36,10 @@ findDogType()
 def write():
     return render_template('write.html', dogTypes=dogTypeList)
 
-@blue_write.route("/write/<idx>")
-def detailPage(idx):
-    return render_template('detailWrite.html', idx=idx)
+@blue_write.route("/write/<name>")
+def detailPage(name):
+    dogInfo = list(db.dog.find({'name':name}))
+    return render_template('detailWrite.html', dogInfo=dogInfo)
 
 @blue_write.route('/posting', methods=['POST'])
 def posting():

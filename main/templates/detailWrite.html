@@ -5,6 +5,8 @@
     <title></title>
 </head>
 <body>
-    {{ idx }}
+{% for di in dogInfo  %}
+    {{ di.name }}
+{% endfor %}
 </body>
 </html>
