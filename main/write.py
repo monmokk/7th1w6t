@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 from bs4 import BeautifulSoup
 import requests
@@ -40,6 +40,9 @@ def writing():
 
 @blue_write.route('/posting', methods=['POST'])
 def posting():
+
+    print(request.form)
+    file = request.files["file_give"]
     name_receive = request.form["name_give"]
     age_receive = request.form["age_give"]
     dogType_receive = request.form["dogType_give"]
@@ -50,13 +53,13 @@ def posting():
     withKids_receive = request.form["withKids_give"]
     explain_receive = request.form["explain_give"]
 
-    file = request.form["file_give"]
+
     extension = file.filename.split('.')[-1]
     today = datetime.now()
     my_time = today.strftime('%Y-%m-%d-%H-%M-%S')
 
     filename = f'file-{my_time}'
-    save_to = f'static/{filename}.{extension}'
+    save_to = f'main/static/{filename}.{extension}'
     file.save(save_to)
 
     doc = {

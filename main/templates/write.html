@@ -31,10 +31,10 @@
         })
 
         let loadFile = function (event) {
-            let file = document.getElementById('file');
-            file.src = URL.createObjectURL(event.target.files[0]);
-            file.onload = function () {
-                URL.revokeObjectURL(file.src)
+            let img_file = document.getElementById('img_file');
+            img_file.src = URL.createObjectURL(event.target.files[0]);
+            img_file.onload = function () {
+                URL.revokeObjectURL(img_file.src)
             }
         };
 
@@ -57,7 +57,7 @@
         }
 
         function posting() {
-            let file = $('#formFile')[0].files[0]
+            let i_file = $('#formFile')[0].files[0]
             let name = $('#name').val()
             let age = $('#age').val()
             let dogType = $("#dogType option:selected").text();
@@ -70,10 +70,9 @@
 
             // validating(file, name, age, dogType, character, fromLocation, toLocation, withDog, withKids, explain)
 
-
-
             let form_data = new FormData()
-            form_data.append("file_give", file)
+
+            form_data.append("file_give", i_file)
             form_data.append("name_give", name)
             form_data.append("age_give", age)
             form_data.append("dogType_give", dogType)
@@ -83,6 +82,8 @@
             form_data.append("withDog_give", withDog)
             form_data.append("withKids_give", withKids)
             form_data.append("explain_give", explain)
+
+            console.log(form_data)
             $.ajax({
                 type: "POST",
                 url: "/posting",
@@ -116,7 +117,7 @@
 <div class="wrap">
     <div class="container bd-example">
         <div class="mb-3">
-            <img id="file" src="..." class="rounded mx-auto d-block mw-fixed" alt=""
+            <img id="img_file" src="..." class="rounded mx-auto d-block mw-fixed" alt=""
                  onerror="this.src='https://media.istockphoto.com/vectors/set-of-vector-cartoon-character-cute-jack-russell-terrier-dog-poses-vector-id1016173982?b=1&k=20&m=1016173982&s=612x612&w=0&h=4wAGWpBCck4fWvp0MPJo4pWRGw6vu_AZFMMfFT7xEq4=';">
             <label for="formFile" class="form-label">강아지 사진</label>
             <input class="form-control" type="file" accept="image/*" id="formFile" onchange="loadFile(event)"  >
