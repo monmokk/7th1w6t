@@ -3,8 +3,6 @@ from . import write
 from . import login
 from . import main_listing
 
-
-
 app = Flask(__name__)
 
 app.register_blueprint(write.blue_write)
