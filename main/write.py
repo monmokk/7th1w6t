@@ -3,6 +3,10 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 import requests
 
+from pymongo import MongoClient
+client = MongoClient('mongodb+srv://test:sparta@cluster0.t0nrj.mongodb.net/Cluster0?retryWrites=true&w=majority')
+db = client.dbsparta
+
 from flask import Flask, render_template, request, jsonify, Blueprint
 
 blue_write = Blueprint("write", __name__, template_folder='templates')
@@ -73,5 +77,6 @@ def posting():
         'explain' :explain_receive
     }
 
-    print(doc)
+    db.users.insert_one(doc)
+    
     return jsonify({'msg' : '등록완료'})
