@@ -40,8 +40,6 @@ def writing():
 
 @blue_write.route('/posting', methods=['POST'])
 def posting():
-
-    print(request.form)
     file = request.files["file_give"]
     name_receive = request.form["name_give"]
     age_receive = request.form["age_give"]
