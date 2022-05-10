@@ -2,10 +2,15 @@ from pymongo import MongoClient
 import jwt
 import datetime
 import hashlib
-from flask import Flask, render_template, jsonify, request, redirect, url_for
+from flask import Flask, render_template, jsonify, request, redirect, url_for, Blueprint
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 
+blue_login = Blueprint("login", __name__, template_folder='templates')
+
+@blue_login.route("/login")
+def login():
+    return render_template('login.html')
 
 from pymongo import MongoClient
 client = MongoClient('mongodb+srv://test:sparta@cluster0.t0nrj.mongodb.net/Cluster0?retryWrites=true&w=majority')
