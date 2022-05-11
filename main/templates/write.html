@@ -32,6 +32,28 @@
     <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
 
     <script>
+        $(document).ready(function () {
+            writing()
+        })
+
+        function writing() {
+            $.ajax({
+                type: "GET",
+                url: "/writing",
+                data: {},
+                success: function (response) {
+                    let dogTypes = response['dogTypes']
+                    for (let i = 0; i < dogTypes.length; i++) {
+
+                        let option = $("<option value=" + i + ">" + dogTypes[i] + "</option>");
+
+                        $('#dogType').append(option)
+                    }
+
+                }
+            });
+        }
+
         let loadFile = function (event) {
             let img_file = document.getElementById('img_file');
             img_file.src = URL.createObjectURL(event.target.files[0]);
@@ -153,16 +175,6 @@
     </script>
 
     <style>
-        body {
-            background-color: RGBA(232, 52, 78, 0.2);
-            min-height: 100vh;
-        }
-
-        .section {
-            padding: 1rem 1.5rem;
-            max-width: 750px;
-            margin: auto;
-        }
 
         .title {
             font-weight: 800;
@@ -199,148 +211,145 @@
 <body>
 <div class="wrap">
 
-    {% include "header.html" %}
 
-    <section class="section">
-        <div id="alertPlaceHolder"></div>
-        <div class="container bd-example">
-            <div class="mb-3">
-                <img id="img_file" src="..." class="rounded mx-auto d-block mw-fixed" alt=""
-                     onerror="this.src='../static/onerror_.jpg'">
-                <label for="formFile" class="form-label">강아지 사진</label>
-                <input class="form-control" type="file" accept="image/*" id="formFile" onchange="loadFile(event)">
+    <div id="alertPlaceHolder"></div>
+    <div class="container bd-example">
+        <div class="mb-3">
+            <img id="img_file" src="..." class="rounded mx-auto d-block mw-fixed" alt=""
+                 onerror="this.src='../static/onerror_.jpg'">
+            <label for="formFile" class="form-label">강아지 사진</label>
+            <input class="form-control" type="file" accept="image/*" id="formFile" onchange="loadFile(event)">
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="name" placeholder="강아지 이름">
+            <label for="name">강아지 이름</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="age" placeholder="강아지 나이">
+            <label for="age">강아지 나이</label>
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="dogType">견종</label>
+            <select class="form-select" id="dogType">
+                <option selected>- 선택하세요 -</option>
+                {% for dogType in dogTypes %}
+                    <option> {{ dogType }} </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="character" placeholder="강아지 성격">
+            <label for="character">강아지 성격</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="fromLocation" placeholder="현재 임보 위치">
+            <label for="fromLocation">현재 임보 위치</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="toLocation" placeholder="임보 가능 지역">
+            <label for="toLocation">임보 가능 지역</label>
+        </div>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne" aria-expanded="false"
+                            aria-controls="flush-collapseOne">
+                        Q1. 다른 강아지들과 잘 지내나요?
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                     data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inline_dog_radio"
+                                   id="with_dog_radio1"
+                                   value="1">
+                            <label class="form-check-label" for="with_dog_radio1">사회성이 부족해요</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inline_dog_radio"
+                                   id="with_dog_radio2"
+                                   value="2">
+                            <label class="form-check-label" for="with_dog_radio2">친한 강아지들과만 잘 지내요</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inline_dog_radio"
+                                   id="with_dog_radio3"
+                                   value="3">
+                            <label class="form-check-label" for="with_dog_radio3">특정 강아지들과 잘 지내요</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inline_dog_radio"
+                                   id="with_dog_radio4"
+                                   value="4">
+                            <label class="form-check-label" for="with_dog_radio4">모든 강아지들과 잘 지내요</label>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="name" placeholder="강아지 이름">
-                <label for="name">강아지 이름</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="age" placeholder="강아지 나이">
-                <label for="age">강아지 나이</label>
-            </div>
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="dogType">견종</label>
-                <select class="form-select" id="dogType">
-                    <option selected>- 선택하세요 -</option>
-                    {% for dogType in dogTypes %}
-                        <option> {{ dogType }} </option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="character" placeholder="강아지 성격">
-                <label for="character">강아지 성격</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="fromLocation" placeholder="현재 임보 위치">
-                <label for="fromLocation">현재 임보 위치</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="toLocation" placeholder="임보 가능 지역">
-                <label for="toLocation">임보 가능 지역</label>
-            </div>
-            <div class="accordion accordion-flush" id="accordionFlushExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseOne" aria-expanded="false"
-                                aria-controls="flush-collapseOne">
-                            Q1. 다른 강아지들과 잘 지내나요?
-                        </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
-                         data-bs-parent="#accordionFlushExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                            aria-controls="flush-collapseTwo">
+                        Q2. 아이들과 잘 지내나요?
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                     data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
                         <div class="accordion-body">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inline_dog_radio"
-                                       id="with_dog_radio1"
+                                <input class="form-check-input" type="radio" name="inline_kids_radio"
+                                       id="with_kids_radio1"
                                        value="1">
-                                <label class="form-check-label" for="with_dog_radio1">사회성이 부족해요</label>
+                                <label class="form-check-label" for="with_kids_radio1">사회성이 부족해요</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inline_dog_radio"
-                                       id="with_dog_radio2"
+                                <input class="form-check-input" type="radio" name="inline_kids_radio"
+                                       id="with_kids_radio2"
                                        value="2">
-                                <label class="form-check-label" for="with_dog_radio2">친한 강아지들과만 잘 지내요</label>
+                                <label class="form-check-label" for="with_kids_radio2">아이들과 거의 잘 못지내요</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inline_dog_radio"
-                                       id="with_dog_radio3"
+                                <input class="form-check-input" type="radio" name="inline_kids_radio"
+                                       id="with_kids_radio3"
                                        value="3">
-                                <label class="form-check-label" for="with_dog_radio3">특정 강아지들과 잘 지내요</label>
+                                <label class="form-check-label" for="with_kids_radio3">초등학생 이상 아이들과 잘 지내요</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inline_dog_radio"
-                                       id="with_dog_radio4"
+                                <input class="form-check-input" type="radio" name="inline_kids_radio"
+                                       id="with_kids_radio4"
                                        value="4">
-                                <label class="form-check-label" for="with_dog_radio4">모든 강아지들과 잘 지내요</label>
+                                <label class="form-check-label" for="with_kids_radio4">모든 아이들과 잘 지내요</label>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseTwo" aria-expanded="false"
-                                aria-controls="flush-collapseTwo">
-                            Q2. 아이들과 잘 지내나요?
-                        </button>
-                    </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
-                         data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <div class="accordion-body">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inline_kids_radio"
-                                           id="with_kids_radio1"
-                                           value="1">
-                                    <label class="form-check-label" for="with_kids_radio1">사회성이 부족해요</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inline_kids_radio"
-                                           id="with_kids_radio2"
-                                           value="2">
-                                    <label class="form-check-label" for="with_kids_radio2">아이들과 거의 잘 못지내요</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inline_kids_radio"
-                                           id="with_kids_radio3"
-                                           value="3">
-                                    <label class="form-check-label" for="with_kids_radio3">초등학생 이상 아이들과 잘 지내요</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inline_kids_radio"
-                                           id="with_kids_radio4"
-                                           value="4">
-                                    <label class="form-check-label" for="with_kids_radio4">모든 아이들과 잘 지내요</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingThree">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseThree" aria-expanded="false"
-                                aria-controls="flush-collapseThree">
-                            Q3. 다른 특이사항이 있을까요? (임보중인 아이에 대해 자세히 설명해주세요)
-                        </button>
-                    </h2>
-                    <div id="flush-collapseThree" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingThree"
-                         data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <div class="mb-3">
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseThree" aria-expanded="false"
+                            aria-controls="flush-collapseThree">
+                        Q3. 다른 특이사항이 있을까요? (임보중인 아이에 대해 자세히 설명해주세요)
+                    </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse"
+                     aria-labelledby="flush-headingThree"
+                     data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <div class="mb-3">
                             <textarea class="form-control" id="explain" rows="3"
                                       placeholder="자세히 적어주실수록 좋아요"></textarea>
-                            </div>
-                            <button onclick="posting()" type="button" class="btn btn-primary">저장하기</button>
                         </div>
+                        <button onclick="posting()" type="button" class="btn btn-primary">저장하기</button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
 </div>
 </div>

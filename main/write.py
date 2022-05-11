@@ -44,6 +44,11 @@ def detailPage(name):
     dogInfo = name
     return render_template('detailWrite.html', dogInfo=dogInfo)
 
+@blue_write.route('/writing', methods=['GET'])
+def writing():
+    dogTypeList = list(findDogType())
+    return jsonify({'dogTypes':dogTypeList})
+
 @blue_write.route('/posting', methods=['POST'])
 def posting():
     file = request.files["file_give"]
