@@ -11,7 +11,6 @@ from flask import Flask, render_template, request, jsonify, Blueprint
 
 blue_write = Blueprint("write", __name__, template_folder='templates')
 
-dogTypeList = list()
 
 def findDogType():
     headers = {
@@ -19,21 +18,24 @@ def findDogType():
     page = "https://namu.wiki/w/견종"
     data = requests.get(page, headers=headers)
     soup = BeautifulSoup(data.text, "html.parser")
-    contents = soup.find_all("ul", {"class": "s9ORJCF8"})
+    contents = soup.find_all("ul", {"class": "ss2SqVXG"})
+    dogTypeList = list()
 
     for content in contents:
-        dogTypes = content.find_all("div", {"class": "Ok9wrLTD"})
+        dogTypes = content.find_all("div", {"class": "-Fv-UxxF"})
         for dogType in dogTypes:
             if dogType.text.find(":") != -1:
                 break
             else:
+                print(dogType.text)
                 dogTypeList.append(dogType.text)
     return dogTypeList
 
-findDogType()
+
 
 @blue_write.route("/write")
 def write():
+    dogTypeList = list(findDogType())
     return render_template('write.html', dogTypes=dogTypeList)
 
 @blue_write.route("/write/<name>")
