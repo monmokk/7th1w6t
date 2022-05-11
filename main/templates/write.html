@@ -237,7 +237,7 @@
 
 
     <div id="alertPlaceHolder"></div>
-    <div class="container bd-example">
+    <div class="container bd-example" style="max-width: 40rem">
         {% if dogInfo %}
             <div class="container_holder"  style="margin-top: 5rem">
                 {% for dog in dogInfo %}
@@ -282,7 +282,7 @@
                     <div class="accordion accordion-flush" id="accordionFlushExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="flush-headingOne">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                <button class="accordion-button collapsed" type="button" style="background-color: lightgrey"
                                         data-bs-target="#flush-collapseOne" aria-expanded="true"
                                         aria-controls="flush-collapseOne">
                                     Q1. 다른 강아지들과 잘 지내나요?
@@ -293,6 +293,7 @@
                                  data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
                                     <div class="form-check form-check-inline">
+                                    A.
                                         {% if withDog == '1' %}
                                             {{ dogName }}이 사회성이 부족해요. 사회성에 대한 훈련이 필요해요!
                                         {% elif withDog == '2' %}
@@ -308,11 +309,12 @@
                             </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="flush-headingTwo">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    <button class="accordion-button collapsed" type="button" style="background-color: lightgrey"
                                             data-bs-target="#flush-collapseTwo" aria-expanded="true"
                                             aria-controls="flush-collapseTwo">
                                         Q2. 아이들과 잘 지내나요?
                                     </button>
+
                                 </h2>
                                 <div id="flush-collapseTwo" class="accordion-collapse collapse show"
                                      aria-labelledby="flush-headingTwo"
@@ -320,6 +322,7 @@
 
                                     <div class="accordion-body">
                                         <div class="form-check form-check-inline">
+                                        A.
 
                                             {% if withDog == '1' %}
                                                 {{ dogName }}이 사회성이 부족해요. 사회성에 대한 훈련이 필요해요!
@@ -336,8 +339,8 @@
                             </div>
                         </div>
                         <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            <h2 class="accordion-header" id="flush-headingThree" >
+                                <button class="accordion-button collapsed" type="button" style="background-color: lightgrey"
                                         data-bs-target="#flush-collapseThree" aria-expanded="true"
                                         aria-controls="flush-collapseThree">
                                     Q3. 다른 특이사항이 있을까요? (임보중인 아이에 대해 자세히 설명해주세요)
@@ -349,7 +352,7 @@
                                 <div class="accordion-body">
                                     <div class="mb-3">
                                         <div class="form-check form-check-inline">
-                                            {{ explain }}
+                                            A. {{ explain }}
                                         </div>
                                     </div>
                                 </div>
