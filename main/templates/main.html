@@ -15,11 +15,18 @@
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
             crossorigin="anonymous"
     />
-    <!--    font-->
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Hi+Melody&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gaegu:wght@300;400&family=Hi+Melody&display=swap"
           rel="stylesheet">
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -36,35 +43,29 @@
 
     <title>함께할개</title>
     <style>
-        * {
-            font-family: 'Nanum Gothic Coding', monospace;
-        }
-
-        @font-face {
-            font-family: 'twayair';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        * {
-            font-family: 'twayair';
+        body {
+            background-color: RGBA(232, 52, 78, 0.2);
+            min-height: 100vh;
         }
 
 
-        .jumbotron {
-            background-color: beige;
-            text-align: center;
-            position: relative;
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
         }
 
-        .jumbotron h1 {
-            margin-bottom: 20px;
+        .button a{
+            color: RGBA(232, 52, 78, 1);
+            text-decoration: none;
         }
+
 
         .wrap {
+
             max-width: 900px;
-            margin: 0px auto;
+            margin: -20px auto 0px auto;
             display: flex;
             flex-wrap: wrap;
             padding: 30px;
@@ -96,19 +97,34 @@
 
         }
 
-        .card_desc h4 {
+        .card_desc h3 {
             margin-top: 10px;
+            font-size: 25px;
+            font-weight: bold;
+            display: block;
+            padding-bottom: 10px;
+            border-bottom: 2px solid RGBA(232, 52, 78, 0.5);
+            text-align: center;
+            color: RGBA(171, 28, 49, 0.8) ;
+            font-family: 'Black Han Sans', sans-serif;
+            font-family: 'Hi Melody', cursive;
+
         }
 
         .card_desc ul {
             margin-top: 10px;
             list-style-type: none;
             position: relative;
-            left: -36px;
+            left: 2px;
         }
 
         .card_desc ul li {
             margin-top: 5px;
+            font-weight: bolder;
+            font-size: 20px;
+            font-family: 'Black Han Sans', sans-serif;
+            font-family: 'Hi Melody', cursive;
+            color: RGBA(171, 28, 49, 0.8) ;
         }
 
         .card_desc_btn {
@@ -152,6 +168,12 @@
 
         }
 
+        .section {
+            padding: 1rem 1.5rem;
+            max-width: 750px;
+            margin: auto;
+        }
+
         .filter {
             display: none;
         }
@@ -173,12 +195,14 @@
             font-family: 'Black Han Sans', sans-serif;
             font-family: 'Hi Melody', cursive;
         }
+
     </style>
     <script>
         $(document).ready(function () {
             //listing()
         })
         console.log(response)
+
         function listing() {
             $.ajax({
                 type: "GET",
@@ -223,6 +247,9 @@
 
 <body>
 {% include "header.html" %}
+<div class="buttons">
+    <button class="button is-danger is-light"><a href="/write">등록하기</a></button>
+</div>
 {#<div class="jumbotron jumbotron-fluid">#}
 {#    <div class="navbar">#}
 {#        <ul class="nav justify-content-end">#}
@@ -247,24 +274,26 @@
 {#    </div>#}
 {#</div>#}
 <div class="wrap" id="card-box">
-        {% for dog in dog_list %}
-            {% set dogPhoto = dog['file'] %}
-            {% set dogType = dog['dogType'] %}
-            {% set dogName = dog['name'] %}
-            {% set dogAge = dog['age'] %}
+    {% for dog in dog_list %}
+        {% set dogPhoto = dog['file'] %}
+        {% set dogType = dog['dogType'] %}
+        {% set dogName = dog['name'] %}
+        {% set dogAge = dog['age'] %}
 
-            <div class="card" onclick="location.href = #">
-                <img src={{ dogPhoto }} alt="" class="card_img">
-                <div class="card_desc">
-                    <h4>{{ dogType }}</h4>
-                    <ul>
-                        <li class='name'> 이름: {{ dogName }}</li>
-                        <li> 나이: {{ dogAge }}살 </li>
-                    </ul>
-                </div>
+        <div class="card" onclick="location.href = #">
+            <img src={{ dogPhoto }} alt="" class="card_img">
+            <div class="card_desc">
+
+                    <h3>{{ dogType }}</h3>
+
+                <ul>
+                    <li class='name'> 이름:   {{ dogName }}</li>
+                    <li> 나이:   {{ dogAge }}살</li>
+                </ul>
             </div>
+        </div>
 
-        {% endfor %}
+    {% endfor %}
 
 
 </div>
