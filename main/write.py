@@ -7,11 +7,26 @@ from pymongo import MongoClient
 client = MongoClient('mongodb+srv://test:sparta@cluster0.t0nrj.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbsparta
 
-from flask import Flask, render_template, request, jsonify, Blueprint
+from flask import Flask, render_template, request, redirect, url_for, jsonify, Blueprint
+import jwt
 
-blue_write = Blueprint("write", __name__, template_folder='templates')
+blue_write = Blueprint("write", __name__, template_folder='templates', url_prefix='/write')
+SECRET_KEY = 'SPARTA'
 
+@blue_write.route('/')
+def home():
+    try:
+        print("dsadasdadadasdadas", request)
+        token_receive = request.cookies.get('mytoken')
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
+        return render_template('write.html')
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login.login"))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login.login"))
+    except Exception :
+        return redirect(url_for("login.login"))
 
 @blue_write.route("/write")
 def write():
@@ -23,7 +38,6 @@ def detailPage(idx):
     try:
         idx = int(idx)
         dogInfo = list(db.dog.find({'idx':idx}))
-        print(dogInfo)
     except Exception as e :
         print(e)
     return render_template('write.html', dogInfo=dogInfo)
