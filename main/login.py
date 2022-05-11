@@ -20,21 +20,22 @@ SECRET_KEY = 'SPARTA'
 
 @blue_login.route('/')
 def home():
-    token_receive = request.cookies.get('mytoken')
     try:
+        token_receive = request.cookies.get('mytoken')
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
         return render_template('index.html')
     except jwt.ExpiredSignatureError:
-        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+        return redirect(url_for("login.login"))
     except jwt.exceptions.DecodeError:
-        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+        return redirect(url_for("login.login"))
+    except Exception :
+        return redirect(url_for("login.login"))
 
 
 @blue_login.route('/login')
 def login():
-    msg = request.args.get("msg")
-    return render_template('login.html', msg=msg)
+    return render_template('login.html')
 
 
 @blue_login.route('/user/<username>')

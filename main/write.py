@@ -40,7 +40,8 @@ def write():
 
 @blue_write.route("/write/<name>")
 def detailPage(name):
-    dogInfo = list(db.dog.find({'name':name}))
+    # dogInfo = list(db.dog.find({'name':name}))
+    dogInfo = name
     return render_template('detailWrite.html', dogInfo=dogInfo)
 
 @blue_write.route('/posting', methods=['POST'])
