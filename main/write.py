@@ -12,37 +12,21 @@ from flask import Flask, render_template, request, jsonify, Blueprint
 blue_write = Blueprint("write", __name__, template_folder='templates')
 
 
-def findDogType():
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-    page = "https://namu.wiki/w/견종"
-    data = requests.get(page, headers=headers)
-    soup = BeautifulSoup(data.text, "html.parser")
-    contents = soup.find_all("ul", {"class": "ss2SqVXG"})
-    dogTypeList = list()
-
-    for content in contents:
-        dogTypes = content.find_all("div", {"class": "-Fv-UxxF"})
-        for dogType in dogTypes:
-            if dogType.text.find(":") != -1:
-                break
-            else:
-                print(dogType.text)
-                dogTypeList.append(dogType.text)
-    return dogTypeList
-
-
 
 @blue_write.route("/write")
 def write():
-    dogTypeList = list(findDogType())
-    return render_template('write.html', dogTypes=dogTypeList)
+    return render_template('write.html')
 
-@blue_write.route("/write/<name>")
-def detailPage(name):
-    # dogInfo = list(db.dog.find({'name':name}))
-    dogInfo = name
-    return render_template('detailWrite.html', dogInfo=dogInfo)
+
+@blue_write.route("/write/<idx>")
+def detailPage(idx):
+    try:
+        idx = int(idx)
+        dogInfo = list(db.dog.find({'idx':idx}))
+        print(dogInfo)
+    except Exception as e :
+        print(e)
+    return render_template('write.html', dogInfo=dogInfo)
 
 @blue_write.route('/writing', methods=['GET'])
 def writing():
@@ -70,7 +54,10 @@ def posting():
     save_to = f'main/static/{filename}.{extension}'
     file.save(save_to)
 
+    idx = len(list(db.dog.find())) + 1
+
     doc = {
+        'idx' : idx,
         'file':f'{filename}.{extension}',
         'name':name_receive,
         'age':age_receive ,
@@ -82,7 +69,24 @@ def posting():
         'withKids':withKids_receive,
         'explain':explain_receive
     }
-
     db.dog.insert_one(doc)
 
     return jsonify({'msg' : f'"{name_receive}" 정보 등록완료'})
+
+def findDogType():
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+    page = "https://namu.wiki/w/견종"
+    data = requests.get(page, headers=headers)
+    soup = BeautifulSoup(data.text, "html.parser")
+    contents = soup.find_all("ul", {"class": "ss2SqVXG"})
+    dogTypeList = list()
+
+    for content in contents:
+        dogTypes = content.find_all("div", {"class": "-Fv-UxxF"})
+        for dogType in dogTypes:
+            if dogType.text.find(":") != -1:
+                break
+            else:
+                dogTypeList.append(dogType.text)
+    return dogTypeList
