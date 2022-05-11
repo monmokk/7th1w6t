@@ -178,7 +178,46 @@
         function showmodal(param) {
             $("#staticBackdrop").addClass("show")
         }
+        $(document).ready(function () {
+            listing()
+        })
 
+        function listing() {
+            $.ajax({
+                type: "GET",
+                url: "/main",
+                data: {},
+                success: function (response) {
+                    let dog_list = response['all_lists']
+                    console.log(response['all_lists'])
+                    for (let i = 0; i < dog_list.length; i++) {
+                        let dog_photo = dog_list[i]['file']
+                        let dog_desc = dog_list[i]['dogType']
+                        let dog_name = dog_list[i]['name']
+                        let dog_age = dog_list[i]['age']
+                        let temp_html = `<div class="card" data-bs-toggle="modal" onclick="location.href='../write/{{ dogIdx }}'">
+                                            <img src='../static/${dog_photo}' alt="" class="card_img">
+                                            <div class="card_desc">
+                                                <h3>${dog_name}</h3>
+                                                <ul>
+                                                    <li >
+                                                        나이: ${dog_age}
+                                                    </li>
+                                                    <li>
+                                                        견종: ${dog_desc}
+                                                    </li>
+                                                </ul>
+
+                                            </div>
+                                        </div>`
+                        $('#card-box').prepend(temp_html)
+                    }
+
+                }
+            })
+        }
+
+    </script>
     </script>
 </head>
 
@@ -207,28 +246,28 @@
     </div>
 </div>
 <div class="wrap" id="card-box">
-    {% for dog in dog_list %}
-        {% set dogPhoto = dog['file'] %}
-        {% set dogType = dog['dogType'] %}
-        {% set dogName = dog['name'] %}
-        {% set dogAge = dog['age'] %}
-        {% set dogIdx = dog['idx'] %}
-
-        <div class="card" data-bs-toggle="modal" onclick="location.href='../write/{{ dogIdx }}'">
-            <img src='../static/{{ dogPhoto }}' alt="" class="card_img">
-            <div class="card_desc">
-
-                <h3>{{ dogName }}</h3>
-
-                <ul>
-                    <li class='name'> 나이: {{ dogAge }}</li>
-                    <li> 견종: {{ dogType }}</li>
-                </ul>
-
-            </div>
-        </div>
-
-    {% endfor %}
+{#    {% for dog in dog_list %}#}
+{#        {% set dogPhoto = dog['file'] %}#}
+{#        {% set dogType = dog['dogType'] %}#}
+{#        {% set dogName = dog['name'] %}#}
+{#        {% set dogAge = dog['age'] %}#}
+{#        {% set dogIdx = dog['idx'] %}#}
+{##}
+{#        <div class="card" data-bs-toggle="modal" onclick="location.href='../write/{{ dogIdx }}'">#}
+{#            <img src='../static/{{ dogPhoto }}' alt="" class="card_img">#}
+{#            <div class="card_desc">#}
+{##}
+{#                <h3>{{ dogName }}</h3>#}
+{##}
+{#                <ul>#}
+{#                    <li class='name'> 나이: {{ dogAge }}</li>#}
+{#                    <li> 견종: {{ dogType }}</li>#}
+{#                </ul>#}
+{##}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#    {% endfor %}#}
 
 
 </div>

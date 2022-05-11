@@ -9,13 +9,13 @@ client = MongoClient('mongodb+srv://test:sparta@cluster0.t0nrj.mongodb.net/Clust
 db = client.dbsparta
 
 @blue_main.route("/main")
+def main():
+    return render_template('main.html')
+
+@blue_main.route("/main", methods=['GET'])
 def main_listing():
     dog_lists = list(db.dog.find({},{'_id':False}))
-
-    print(dog_lists)
-    return render_template('main.html', dog_list=dog_lists)
-
-
-@blue_main.route('/listing', methods=['GET'])
-def show_main():
     return jsonify({'all_lists': dog_lists})
+
+
+
