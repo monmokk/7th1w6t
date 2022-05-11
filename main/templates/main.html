@@ -48,12 +48,10 @@
             min-height: 100vh;
         }
 
-
-
         .buttons {
             display: flex;
             justify-content: center;
-            margin-top: 30px;
+            margin: 30px;
         }
 
         .button a{
@@ -61,32 +59,30 @@
             text-decoration: none;
         }
 
-
         .wrap {
-
             max-width: 1500px;
             margin: -20px auto 0px auto;
             display: flex;
             flex-wrap: wrap;
             padding: 30px;
-            /*justify-content: space-around;*/
         }
 
         .card {
-
             width: 250px;
             height: 300px;
-            margin: 10px 20px 10px 10px;
+            margin: 10px 20px 25px 10px;
             border-radius: 10px;
             cursor: pointer;
+            transition: all 0.1s ease-in-out;}
 
+        .card:hover {
+            transform: scale(1.1);
         }
 
         .card_img {
             display: block;
             width: 250px;
             height: 160px;
-
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
         }
@@ -94,7 +90,6 @@
         .card_desc {
             max-height: 140px;
             padding: 5px;
-
         }
 
         .card_desc h3 {
@@ -108,7 +103,6 @@
             color: RGBA(171, 28, 49, 0.8) ;
             font-family: 'Black Han Sans', sans-serif;
             font-family: 'Hi Melody', cursive;
-
         }
 
         .card_desc ul {
@@ -142,25 +136,7 @@
             text-decoration: none;
         }
 
-        .navbar {
-            position: absolute;
-            right: 3px;
-            top: -5px;
 
-        }
-
-        .nav-link {
-            color: black;
-        }
-
-        .add_btn {
-            background-color: transparent;
-            border-radius: 30px;
-            width: 100px;
-            border: black 1px solid;
-            position: relative;
-            top: 20px
-        }
 
         .add_btn a {
             color: black;
@@ -198,48 +174,6 @@
 
     </style>
     <script>
-        $(document).ready(function () {
-            //listing()
-        })
-        console.log(response)
-
-        function listing() {
-            $.ajax({
-                type: "GET",
-                url: "/listing",
-                data: {},
-                success: function (response) {
-                    let dog_list = response['all_lists']
-                    console.log(response['all_lists'])
-                    for (let i = 0; i < dog_list.length; i++) {
-                        let dog_photo = dog_list[i]['file']
-                        let dog_desc = dog_list[i]['dogType']
-                        let dog_name = dog_list[i]['name']
-                        let dog_age = dog_list[i]['age']
-                        let temp_html = `<div class="card" onclick="location.href = #">
-                                            <img
-                                                    src=${dog_photo}
-                                                    alt="" class="card_img">
-                                            <div class="card_desc">
-                                                <h4>${dog_desc}</h4>
-                                                <ul>
-                                                    <li class='name'>
-                                                        이름: ${dog_name}
-                                                    </li>
-                                                    <li>
-                                                        나이: ${dog_age}살
-                                                    </li>
-                                                </ul>
-
-                                            </div>
-                                        </div>`
-                        $('#card-box').append(temp_html)
-                    }
-
-
-                }
-            })
-        }
 
 
     </script>
@@ -250,29 +184,7 @@
 <div class="buttons">
     <button class="button is-danger is-light"><a href="/write">등록하기</a></button>
 </div>
-{#<div class="jumbotron jumbotron-fluid">#}
-{#    <div class="navbar">#}
-{#        <ul class="nav justify-content-end">#}
-{##}
-{#            <li class="nav-item">#}
-{#                <a class="nav-link" href="#">로그아웃</a>#}
-{#            </li>#}
-{##}
-{#        </ul>#}
-{#    </div>#}
 
-{#    <div class="container">#}
-{#        <h1 class="display-4">함께할개</h1>#}
-{#        <p class="lead">소중한 가족을 찾아보세요.</p>#}
-{#    </div>#}
-{#    <div>#}
-{#        <button class="add_btn"><a href="/write">등록</a></button>#}
-{#    </div>#}
-{#    <div>#}
-{#        <input id="searchType" type="text">#}
-{#        <button>검색</button>#}
-{#    </div>#}
-{#</div>#}
 <div class="wrap" id="card-box">
     {% for dog in dog_list %}
         {% set dogPhoto = dog['file'] %}
