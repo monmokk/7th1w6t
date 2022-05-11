@@ -151,7 +151,9 @@
             text-decoration: none;
 
         }
-
+        .filter {
+            display: none;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -167,10 +169,10 @@
                     let dog_list = response['all_lists']
                     console.log(response['all_lists'])
                     for (let i = 0; i < dog_list.length; i++) {
-                        let dog_photo = dog_list[i]['dog_photo']
-                        let dog_desc = dog_list[i]['dog_desc']
-                        let dog_name = dog_list[i]['dog_name']
-                        let dog_age = dog_list[i]['dog_age']
+                        let dog_photo = dog_list[i]['file']
+                        let dog_desc = dog_list[i]['dogType']
+                        let dog_name = dog_list[i]['name']
+                        let dog_age = dog_list[i]['age']
                         let temp_html = `<div class="card" onclick="location.href = #">
                                             <img
                                                     src=${dog_photo}
@@ -178,7 +180,7 @@
                                             <div class="card_desc">
                                                 <h4>${dog_desc}</h4>
                                                 <ul>
-                                                    <li>
+                                                    <li class='name'>
                                                         이름: ${dog_name}
                                                     </li>
                                                     <li>
@@ -191,9 +193,13 @@
                         $('#card-box').append(temp_html)
                     }
 
+
                 }
             })
         }
+
+
+
     </script>
 </head>
 
@@ -214,7 +220,8 @@
         <p class="lead">소중한 가족을 찾아보세요.</p>
     </div>
     <div>
-        <button class="add_btn"><a href="#">등록</a></button>
+        <button class="add_btn"><a href="/write">등록</a></button>
+
     </div>
 </div>
 <div class="wrap" id="card-box">
