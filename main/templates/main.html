@@ -97,7 +97,7 @@
         }
 
         .card_desc h4 {
-         margin-top: 10px;
+            margin-top: 10px;
         }
 
         .card_desc ul {
@@ -108,7 +108,7 @@
         }
 
         .card_desc ul li {
-          margin-top: 5px;
+            margin-top: 5px;
         }
 
         .card_desc_btn {
@@ -151,6 +151,7 @@
             text-decoration: none;
 
         }
+
         .filter {
             display: none;
         }
@@ -159,7 +160,7 @@
         $(document).ready(function () {
             //listing()
         })
-
+        console.log(response)
         function listing() {
             $.ajax({
                 type: "GET",
@@ -199,7 +200,6 @@
         }
 
 
-
     </script>
 </head>
 
@@ -221,10 +221,31 @@
     </div>
     <div>
         <button class="add_btn"><a href="/write">등록</a></button>
-
+    </div>
+    <div>
+        <input id="searchType" type="text">
+        <button>검색</button>
     </div>
 </div>
 <div class="wrap" id="card-box">
+        {% for dog in dog_list %}
+            {% set dogPhoto = dog['file'] %}
+            {% set dogType = dog['dogType'] %}
+            {% set dogName = dog['name'] %}
+            {% set dogAge = dog['age'] %}
+            {% if dogType == '진도개' %}
+            <div class="card" onclick="location.href = #">
+                <img src={{ dogPhoto }} alt="" class="card_img">
+                <div class="card_desc">
+                    <h4>{{ dogType }}</h4>
+                    <ul>
+                        <li class='name'> 이름: {{ dogName }}</li>
+                        <li> 나이: {{ dogAge }}살 </li>
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
 
 
 </div>
