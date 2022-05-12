@@ -37,21 +37,6 @@ def home():
 def login():
     return render_template('login.html')
 
-
-@blue_login.route('/user/<username>')
-def user(username):
-    # 각 사용자의 프로필과 글을 모아볼 수 있는 공간
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        status = (username == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
-
-        user_info = db.users.find_one({"username": username}, {"_id": False})
-        return render_template('user.html', user_info=user_info, status=status)
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
-
-
 @blue_login.route('/sign_in', methods=['POST'])
 def sign_in():
     # 로그인
@@ -83,9 +68,9 @@ def sign_up():
         "username": username_receive,                               # 아이디
         "password": password_hash,                                  # 비밀번호
         "profile_name": username_receive,                           # 프로필 이름 기본값은 아이디
-        "profile_pic": "",                                          # 프로필 사진 파일 이름
-        "profile_pic_real": "profile_pics/profile_placeholder.png", # 프로필 사진 기본 이미지
-        "profile_info": ""                                          # 프로필 한 마디
+        # "profile_pic": "",                                          # 프로필 사진 파일 이름
+        # "profile_pic_real": "profile_pics/profile_placeholder.png", # 프로필 사진 기본 이미지
+        # "profile_info": ""                                          # 프로필 한 마디
     }
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})
@@ -98,46 +83,4 @@ def check_dup():
     return jsonify({'result': 'success', 'exists': exists})
 
 
-@blue_login.route('/update_profile', methods=['POST'])
-def save_img():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # 프로필 업데이트
-        return jsonify({"result": "success", 'msg': '프로필을 업데이트했습니다.'})
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
-
-
-@blue_login.route('/posting', methods=['POST'])
-def posting():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # 포스팅하기
-        return jsonify({"result": "success", 'msg': '포스팅 성공'})
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
-
-
-@blue_login.route("/get_posts", methods=['GET'])
-def get_posts():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # 포스팅 목록 받아오기
-        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다."})
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
-
-
-@blue_login.route('/update_like', methods=['POST'])
-def update_like():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # 좋아요 수 변경
-        return jsonify({"result": "success", 'msg': 'updated'})
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
 

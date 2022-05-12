@@ -22,7 +22,7 @@
           rel="stylesheet">
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-
+{#    <link href="{{ url_for('static', filename='write.css') }}" rel="stylesheet">#}
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -264,61 +264,61 @@
             }
         }
     </script>
-
-    <style>
-
-        .title {
-            font-weight: 800;
-            font-size: 5rem;
-            font-family: 'Black Han Sans', sans-serif;
-            font-family: 'Hi Melody', cursive;
-        }
-
-        .is-sparta {
-            color: #e8344e !important;
-        }
-
-        .subtitle {
-            font-size: 2rem;
-            font-family: 'Black Han Sans', sans-serif;
-            font-family: 'Gaegu', cursive;
-            font-family: 'Hi Melody', cursive;
-        }
-
-        .bd-example {
-            position: relative;
-            margin: 1rem 1rem 1rem 1rem;
-            padding: 1.5rem;
-            border: solid #dee2e6;
-            background-color: #dee2e6 !important;
-        }
-
-        .mw-fixed {
-            max-width: 30rem;
-        }
-
-        .container {
-            max-width: 93.5rem;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-
-        .file img {
-            max-width: 20rem;
-            border-radius: 40%;
-        }
-
-        .container_holder {
-            margin-bottom: 10rem;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: center !important;
-            margin: 30px;
-        }
-    </style>
+{##}
+{#    <style>#}
+{##}
+{#        .title {#}
+{#            font-weight: 800;#}
+{#            font-size: 5rem;#}
+{#            font-family: 'Black Han Sans', sans-serif;#}
+{#            font-family: 'Hi Melody', cursive;#}
+{#        }#}
+{##}
+{#        .is-sparta {#}
+{#            color: #e8344e !important;#}
+{#        }#}
+{##}
+{#        .subtitle {#}
+{#            font-size: 2rem;#}
+{#            font-family: 'Black Han Sans', sans-serif;#}
+{#            font-family: 'Gaegu', cursive;#}
+{#            font-family: 'Hi Melody', cursive;#}
+{#        }#}
+{##}
+{#        .bd-example {#}
+{#            position: relative;#}
+{#            margin: 1rem 1rem 1rem 1rem;#}
+{#            padding: 1.5rem;#}
+{#            border: solid #dee2e6;#}
+            {#background-color: #dee2e6 !important;#}
+{#        }#}
+{##}
+{#        .mw-fixed {#}
+{#            max-width: 30rem;#}
+{#        }#}
+{##}
+{#        .container {#}
+{#            max-width: 93.5rem;#}
+{#            margin: 0 auto;#}
+{#            padding: 0 2rem;#}
+{#        }#}
+{##}
+{##}
+{#        .file img {#}
+{#            max-width: 20rem;#}
+{#            border-radius: 40%;#}
+{#        }#}
+{##}
+{#        .container_holder {#}
+{#            margin-bottom: 10rem;#}
+{#        }#}
+{##}
+{#        .buttons {#}
+{#            display: flex;#}
+{#            justify-content: center !important;#}
+{#            margin: 30px;#}
+{#        }#}
+{#    </style>#}
 
 </head>
 <body>
@@ -330,7 +330,7 @@
 
 
     <div id="alertPlaceHolder"></div>
-    <div class="container bd-example" style="max-width: 40rem">
+    <div class="container bd-example" style="max-width: 30rem">
         {% if dogInfo and written_usr == false %}
 
 
