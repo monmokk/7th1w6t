@@ -488,7 +488,7 @@
                 {% set withKids = dog['withKids'] %}
                 {% set explain = dog['explain'] %}
                 <div class="mb-3">
-                    <img id="img_file" src="..." class="rounded mx-auto d-block mw-fixed" alt=""
+                    <img id="img_file" class="rounded mx-auto d-block mw-fixed" alt=""
                          onerror="this.src='../static/onerror_.jpg'" src='../static/{{ dogPhoto }}'>
                     <label for="formFile" class="form-label">강아지 사진</label>
                     <input class="form-control" type="file" accept="image/*" id="formFile" onchange="loadFile(event)">
@@ -667,9 +667,7 @@
                              data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
                                 <div class="mb-3">
-                            <textarea class="form-control" id="explain" rows="3">
-                                {{ explain }}
-                            </textarea>
+                            <textarea class="form-control" id="explain" rows="3">{{ explain }}</textarea>
                                 </div>
                                 <button onclick="dogUpdating()" type="button" class="btn btn-primary">수정하기</button>
                                 <button onclick="dogDelete()" type="button" class="btn btn-primary">삭제하기</button>
