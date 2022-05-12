@@ -1,6 +1,81 @@
-<section class="hero is-white">
-    <div class="hero-body has-text-centered" style="padding-bottom:1rem;margin:auto;">
-        <h1 class="title is-sparta">함께할개</h1>
-        <h3 class="subtitle is-sparta">세상을 달달하게</h3>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Hi+Melody&display=swap" rel="stylesheet">
+
+<!-- JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<style>
+
+    .is-sparta {
+        font-weight: 900;
+        font-size: 2.5rem;
+        font-family: 'Black Han Sans', sans-serif;
+        font-family: 'Hi Melody', cursive;
+        color: #D9D4FF!important;
+    }
+    {#.navbar-brand {#}
+    {##}
+    {#    background-color: #C8BDF3;#}
+    {##}
+    {#}#}
+
+    * {margin:0; padding:0;}
+    ul li {list-style:none;}
+    .clearfix:after{content:'';display:block; clear:both;}
+    body {background:green; overflow-y:scroll;}
+
+    .clearfix {
+    display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    header {
+        margin-top:20px;
+        {#background:linear-gradient(rgba(255,255,255,0.5) 50px, rgba(255,255,255,0.5) 50px, rgba(255,255,255,0.5) );#}
+        height:90px;
+        overflow:hidden;
+    }
+
+    nav {width:1900px; margin:0 auto;}
+    nav > ul > li {float:left; line-height:50px; margin-right:40px; position: relative;}
+    {#nav > ul > li ul{ width:100%; display: none; position: absolute;}#}
+    {#nav > ul > li ul li{white-space:nowrap;}#}
+
+
+
+
+
+</style>
+
+<script>
+
+    function sign_out() {
+        $.removeCookie('mytoken', {path: '/'});
+        alert('로그아웃!')
+        window.location.href = "/login"
+    }
+
+
+</script>
+
+
+<header>
+
+    <nav class="clearfix is-fixed-top is-white" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" style="border-bottom: white;" href="/">
+                <strong class="is-sparta"
+                >함께할개</strong>
+            </a>
+
+        </div>
+               <div>
+    <button class="button is-danger" onclick="sign_out()">로그아웃</button>
     </div>
-</section>
+    </nav>
+
+</header>
+
