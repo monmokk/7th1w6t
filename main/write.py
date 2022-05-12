@@ -20,6 +20,7 @@ def write():
     return render_template('write.html')
 
 
+
 @blue_write.route("/write/<idx>")
 def detailPage(idx):
     idx = int(idx)
