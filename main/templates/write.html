@@ -35,14 +35,14 @@
         function dogDelete() {
             let idx = $('#dogIdx').val()
             $.ajax({
-                    type: "POST",
-                    url: "/deleting",
-                    data: { idx_give:idx },
-                    success: function (response) {
-                        alert(response["msg"])
-                        window.location.reload()
-                    }
-                });
+                type: "POST",
+                url: "/deleting",
+                data: {idx_give: idx},
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload()
+                }
+            });
         }
 
         $(document).ready(function () {
@@ -78,6 +78,7 @@
 
 
             let conc = validating(file, name, age, dogType, character, fromLocation, toLocation, withDog, withKids, explain)
+
 
             if (conc) {
                 let form_data = new FormData()
@@ -154,6 +155,9 @@
                 if (file_already != undefined) {
                     if (fileChecking()) {
                         file = file_already
+                    } else {
+                        $("#alertPlaceHolder").append(div_alert)
+                        return false
                     }
 
                 } else {
@@ -351,7 +355,7 @@
                         <div class="container">
                             <div class="file ">
                                 <img id="img_file" src='../static/{{ dogPhoto }}' class="mx-auto d-block mw-fixed"
-                                     alt="">
+                                     onerror="this.src='../static/onerror_.jpg'" alt="">
 
                             </div>
 
@@ -359,11 +363,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label">이름</label>
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ dogName }}">
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ dogName }}" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label">나이</label>
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ dogAge }}">
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ dogAge }}" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="disabledSelect" class="form-label">견종</label>
@@ -373,15 +377,15 @@
                     </div>
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label">성격</label>
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ dogCharacter }}">
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ dogCharacter }}" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label">현재 임보 위치</label>
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ fromLocation }}">
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ fromLocation }}" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label">입양 가능 지역</label>
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ toLocation }}">
+                         <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ toLocation }}" disabled>
                     </div>
                     <div class="accordion accordion-flush" id="accordionFlushExample">
                         <div class="accordion-item">
@@ -488,8 +492,8 @@
                 {% set withKids = dog['withKids'] %}
                 {% set explain = dog['explain'] %}
                 <div class="mb-3">
-                    <img id="img_file" src="..." class="rounded mx-auto d-block mw-fixed" alt=""
-                         onerror="this.src='../static/{{ dogPhoto }}'">
+                    <img id="img_file" class="rounded mx-auto d-block mw-fixed" alt=""
+                         onerror="this.src='../static/onerror_.jpg'" src='../static/{{ dogPhoto }}'>
                     <label for="formFile" class="form-label">강아지 사진</label>
                     <input class="form-control" type="file" accept="image/*" id="formFile" onchange="loadFile(event)">
                     <input type="hidden" id="file_already" value="{{ dogPhoto }}">
@@ -667,12 +671,13 @@
                              data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
                                 <div class="mb-3">
-                            <textarea class="form-control" id="explain" rows="3">
-                                {{ explain }}
-                            </textarea>
+                                    <textarea class="form-control" id="explain" rows="3">{{ explain }}</textarea>
                                 </div>
                                 <button onclick="dogUpdating()" type="button" class="btn btn-primary">수정하기</button>
                                 <button onclick="dogDelete()" type="button" class="btn btn-primary">삭제하기</button>
+                                <button class="button is-danger is-light" onclick="location.href='../main'"
+                                        style="left: 11rem"> 목록으로 돌아가기
+                                </button>
                             </div>
                         </div>
                     </div>

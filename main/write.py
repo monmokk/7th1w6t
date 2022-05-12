@@ -8,7 +8,7 @@ from pymongo import MongoClient
 client = MongoClient('mongodb+srv://test:sparta@cluster0.t0nrj.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbsparta
 
-from flask import Flask, render_template, request, jsonify, Blueprint
+from flask import Flask, render_template, request, jsonify, Blueprint, url_for, redirect
 
 blue_write = Blueprint("write", __name__, template_folder='templates')
 
@@ -18,6 +18,7 @@ SECRET_KEY = 'SPARTA'
 @blue_write.route("/write")
 def write():
     return render_template('write.html')
+
 
 
 @blue_write.route("/write/<idx>")
@@ -32,9 +33,10 @@ def detailPage(idx):
             written_usr = True
         # if dogInfo == []:
         #     dogInfo
+        return render_template('write.html', dogInfo=dogInfo, written_usr=written_usr, loginId=payload['id'])
     except Exception as e:
         print("요기가 문제개", e)
-    return render_template('write.html', dogInfo=dogInfo, written_usr=written_usr, loginId=payload['id'])
+        return redirect(url_for("login.login"))
 
 
 
