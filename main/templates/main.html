@@ -226,9 +226,13 @@
 <div class="buttons">
     <button type="button" class="button is-danger is-light" data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
-            onclick="showmodal()">
+            onclick="showmodal(e)">
         등록하기
     </button>
+</div>
+<div class="search">
+    <input class="search_input" type="text">
+    <button onclick="searchDog()">찾기</button>
 </div>
 <!-- 모달 화면 -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -271,5 +275,11 @@
 
 
 </div>
+<script>
+    function searchDog(e){
+        let searchWord = document.querySelector('.search_input')
+        console.log(searchWord)
+    }
+</script>
 </body>
 </html>
