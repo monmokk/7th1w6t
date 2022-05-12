@@ -42,7 +42,6 @@
                 url: "/deleting",
                 data: {idx_give: idx},
                 success: function (response) {
-                    alert(response["msg"])
                     window.location.reload()
                 }
             });
@@ -123,12 +122,18 @@
                 url: "/writing",
                 data: {},
                 success: function (response) {
+
                     let dogTypes = response['dogTypes']
+
                     for (let i = 0; i < dogTypes.length; i++) {
+                        if (i == 0) {
+                            $('#loginId').val(dogTypes[i])
+                        } else {
+                            let option = $("<option value=" + i + ">" + dogTypes[i] + "</option>");
+                            $('#dogType').append(option)
+                        }
 
-                        let option = $("<option value=" + i + ">" + dogTypes[i] + "</option>");
 
-                        $('#dogType').append(option)
                     }
 
                 }

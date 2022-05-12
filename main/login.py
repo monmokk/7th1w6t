@@ -9,7 +9,7 @@ blue_login = Blueprint("login", __name__, template_folder='templates')
 
 
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://test:sparta@cluster0.t0nrj.mongodb.net/Cluster0?retryWrites=true&w=majority')
+client = MongoClient('')
 db = client.dbsparta
 
 app = Flask(__name__)
