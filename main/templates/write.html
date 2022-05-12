@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <title>함께할개</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -22,11 +23,11 @@
           rel="stylesheet">
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-{#    <link href="{{ url_for('static', filename='write.css') }}" rel="stylesheet">#}
+    {#    <link href="{{ url_for('static', filename='write.css') }}" rel="stylesheet">#}
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     {% if dogInfo %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     {% endif %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -266,61 +267,61 @@
             }
         }
     </script>
-{##}
-{#    <style>#}
-{##}
-{#        .title {#}
-{#            font-weight: 800;#}
-{#            font-size: 5rem;#}
-{#            font-family: 'Black Han Sans', sans-serif;#}
-{#            font-family: 'Hi Melody', cursive;#}
-{#        }#}
-{##}
-{#        .is-sparta {#}
-{#            color: #e8344e !important;#}
-{#        }#}
-{##}
-{#        .subtitle {#}
-{#            font-size: 2rem;#}
-{#            font-family: 'Black Han Sans', sans-serif;#}
-{#            font-family: 'Gaegu', cursive;#}
-{#            font-family: 'Hi Melody', cursive;#}
-{#        }#}
-{##}
-{#        .bd-example {#}
-{#            position: relative;#}
-{#            margin: 1rem 1rem 1rem 1rem;#}
-{#            padding: 1.5rem;#}
-{#            border: solid #dee2e6;#}
-            {#background-color: #dee2e6 !important;#}
-{#        }#}
-{##}
-{#        .mw-fixed {#}
-{#            max-width: 30rem;#}
-{#        }#}
-{##}
-{#        .container {#}
-{#            max-width: 93.5rem;#}
-{#            margin: 0 auto;#}
-{#            padding: 0 2rem;#}
-{#        }#}
-{##}
-{##}
-{#        .file img {#}
-{#            max-width: 20rem;#}
-{#            border-radius: 40%;#}
-{#        }#}
-{##}
-{#        .container_holder {#}
-{#            margin-bottom: 10rem;#}
-{#        }#}
-{##}
-{#        .buttons {#}
-{#            display: flex;#}
-{#            justify-content: center !important;#}
-{#            margin: 30px;#}
-{#        }#}
-{#    </style>#}
+    {##}
+    {#    <style>#}
+    {##}
+    {#        .title {#}
+    {#            font-weight: 800;#}
+    {#            font-size: 5rem;#}
+    {#            font-family: 'Black Han Sans', sans-serif;#}
+    {#            font-family: 'Hi Melody', cursive;#}
+    {#        }#}
+    {##}
+    {#        .is-sparta {#}
+    {#            color: #e8344e !important;#}
+    {#        }#}
+    {##}
+    {#        .subtitle {#}
+    {#            font-size: 2rem;#}
+    {#            font-family: 'Black Han Sans', sans-serif;#}
+    {#            font-family: 'Gaegu', cursive;#}
+    {#            font-family: 'Hi Melody', cursive;#}
+    {#        }#}
+    {##}
+    {#        .bd-example {#}
+    {#            position: relative;#}
+    {#            margin: 1rem 1rem 1rem 1rem;#}
+    {#            padding: 1.5rem;#}
+    {#            border: solid #dee2e6;#}
+    {#background-color: #dee2e6 !important;#}
+    {#        }#}
+    {##}
+    {#        .mw-fixed {#}
+    {#            max-width: 30rem;#}
+    {#        }#}
+    {##}
+    {#        .container {#}
+    {#            max-width: 93.5rem;#}
+    {#            margin: 0 auto;#}
+    {#            padding: 0 2rem;#}
+    {#        }#}
+    {##}
+    {##}
+    {#        .file img {#}
+    {#            max-width: 20rem;#}
+    {#            border-radius: 40%;#}
+    {#        }#}
+    {##}
+    {#        .container_holder {#}
+    {#            margin-bottom: 10rem;#}
+    {#        }#}
+    {##}
+    {#        .buttons {#}
+    {#            display: flex;#}
+    {#            justify-content: center !important;#}
+    {#            margin: 30px;#}
+    {#        }#}
+    {#    </style>#}
 
 </head>
 <body>
@@ -365,11 +366,13 @@
                     </div>
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label">이름</label>
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ dogName }}" disabled>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ dogName }}"
+                               disabled>
                     </div>
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label">나이</label>
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ dogAge }}" disabled>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ dogAge }}"
+                               disabled>
                     </div>
                     <div class="mb-3">
                         <label for="disabledSelect" class="form-label">견종</label>
@@ -379,15 +382,18 @@
                     </div>
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label">성격</label>
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ dogCharacter }}" disabled>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ dogCharacter }}"
+                               disabled>
                     </div>
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label">현재 임보 위치</label>
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ fromLocation }}" disabled>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ fromLocation }}"
+                               disabled>
                     </div>
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label">입양 가능 지역</label>
-                         <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ toLocation }}" disabled>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ toLocation }}"
+                               disabled>
                     </div>
                     <div class="accordion accordion-flush" id="accordionFlushExample">
                         <div class="accordion-item">
