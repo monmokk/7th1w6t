@@ -32,9 +32,86 @@
     <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
 
     <script>
+        function dogDelete() {
+            let idx = $('#dogIdx').val()
+            $.ajax({
+                    type: "POST",
+                    url: "/deleting",
+                    data: { idx_give:idx },
+                    success: function (response) {
+                        alert(response["msg"])
+                        window.location.reload()
+                    }
+                });
+        }
+
         $(document).ready(function () {
             writing()
         })
+
+        function fileChecking() {
+            let checking_1 = $('#img_file').attr('src').split('static/')
+            let checking_2 = $('#file_already').val()
+            let id_file = false
+            if (checking_1[1] == checking_2) {
+                return id_file = true
+            } else {
+                return id_file
+            }
+        }
+
+        let file
+
+        function dogUpdating() {
+            let loginId = $('#loginId').val()
+            let idx = $('#dogIdx').val()
+            file = $('#formFile')[0].files[0]
+            let name = $('#name').val()
+            let age = $('#age').val()
+            let dogType = $("#dogType option:selected").text();
+            let character = $('#character').val()
+            let fromLocation = $('#fromLocation').val()
+            let toLocation = $('#toLocation').val()
+            let withDog = $('input:radio[name="inline_dog_radio"]:checked').val()
+            let withKids = $('input:radio[name="inline_kids_radio"]:checked').val()
+            let explain = $('#explain').val()
+
+
+            let conc = validating(file, name, age, dogType, character, fromLocation, toLocation, withDog, withKids, explain)
+
+            if (conc) {
+                let form_data = new FormData()
+                form_data.append("id_give", loginId)
+                form_data.append("idx_give", idx)
+
+                form_data.append("age_give", age)
+                form_data.append("file_give", file)
+                form_data.append("name_give", name)
+                form_data.append("age_give", age)
+                form_data.append("dogType_give", dogType)
+                form_data.append("character_give", character)
+                form_data.append("fromLocation_give", fromLocation)
+                form_data.append("toLocation_give", toLocation)
+                form_data.append("withDog_give", withDog)
+                form_data.append("withKids_give", withKids)
+                form_data.append("explain_give", explain)
+
+                $.ajax({
+                    type: "POST",
+                    url: "/updating",
+                    data: form_data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        alert(response["msg"])
+                        window.location.reload()
+                    }
+                });
+
+            }
+
+        }
 
         function writing() {
             $.ajax({
@@ -62,9 +139,8 @@
             }
         };
 
-        let bool = false
 
-        function validating(file, name, age, dogType, character, fromLocation, toLocation, withDog, withKids, explain) {
+        function validating(fileV, name, age, dogType, character, fromLocation, toLocation, withDog, withKids, explain) {
             let div_alert = `<div class="alert alert-primary d-flex align-items-center" role="alert">
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
     <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
@@ -73,63 +149,73 @@
         필드를 다 채워주세요
   </div>
 </div>`
+            if (fileV == undefined) {
+                let file_already = $('#file_already').val()
+                if (file_already != undefined) {
+                    if (fileChecking()) {
+                        file = file_already
+                    }
 
-            if (file == undefined) {
-                $("#alertPlaceHolder").append(div_alert)
-                return bool
+                } else {
+                    $("#alertPlaceHolder").append(div_alert)
+                    return false
+                }
+
             } else if (name == "") {
                 $("#alertPlaceHolder").append(div_alert)
                 $('#name').focus()
 
-                return bool
+                return false
 
             } else if (age == "") {
                 $("#alertPlaceHolder").append(div_alert)
                 $('#age').focus()
-                return bool
+                return false
 
             } else if (dogType == "- 선택하세요 -") {
                 $("#alertPlaceHolder").append(div_alert)
                 $('#dogType').focus()
-                return bool
+                return false
 
             } else if (character == "") {
                 $("#alertPlaceHolder").append(div_alert)
                 $('#character').focus()
-                return bool
+                return false
 
             } else if (fromLocation == "") {
                 $("#alertPlaceHolder").append(div_alert)
                 $('#fromLocation').focus()
-                return bool
+                return false
 
             } else if (toLocation == "") {
                 $("#alertPlaceHolder").append(div_alert)
                 $('#toLocation').focus()
-                return bool
+                return false
 
             } else if (withDog == undefined) {
                 $("#alertPlaceHolder").append(div_alert)
                 $('#withDog').focus()
-                return bool
+                return false
 
             } else if (withKids == undefined) {
                 $("#alertPlaceHolder").append(div_alert)
                 $('#withKids').focus()
-                return bool
+                return false
 
             } else if (explain == "") {
                 $("#alertPlaceHolder").append(div_alert)
                 $('#explain').focus()
-                return bool
+                return false
 
             } else {
-                return bool = true
+                return true
             }
+            return true
         }
 
         function posting() {
-            let file = $('#formFile')[0].files[0]
+            let loginId = $('#loginId').val()
+            file = $('#formFile')[0].files[0]
             let name = $('#name').val()
             let age = $('#age').val()
             let dogType = $("#dogType option:selected").text();
@@ -140,12 +226,13 @@
             let withKids = $('input:radio[name="inline_kids_radio"]:checked').val()
             let explain = $('#explain').val()
 
-            validating(file, name, age, dogType, character, fromLocation, toLocation, withDog, withKids, explain)
+            let conc = validating(file, name, age, dogType, character, fromLocation, toLocation, withDog, withKids, explain)
 
-            if (bool == true) {
+            if (conc) {
 
                 let form_data = new FormData()
 
+                form_data.append("id_give", loginId)
                 form_data.append("file_give", file)
                 form_data.append("name_give", name)
                 form_data.append("age_give", age)
@@ -213,7 +300,7 @@
         }
 
 
-        .file  img {
+        .file img {
             max-width: 20rem;
             border-radius: 40%;
         }
@@ -221,6 +308,7 @@
         .container_holder {
             margin-bottom: 10rem;
         }
+
         .buttons {
             display: flex;
             justify-content: center !important;
@@ -233,13 +321,20 @@
 {% if dogInfo %}
     {% include "header.html" %}
 {% endif %}
+<input type="hidden" id="loginId" value="{{ loginId }}">
 <div class="wrap">
 
 
     <div id="alertPlaceHolder"></div>
     <div class="container bd-example" style="max-width: 40rem">
-        {% if dogInfo %}
-            <div class="container_holder"  style="margin-top: 5rem">
+        {% if dogInfo and written_usr == false %}
+
+
+
+
+
+
+            <div class="container_holder" style="margin-top: 5rem">
                 {% for dog in dogInfo %}
                     {% set dogPhoto = dog['file'] %}
                     {% set dogType = dog['dogType'] %}
@@ -248,6 +343,7 @@
                     {% set dogIdx = dog['idx'] %}
                     {% set dogCharacter = dog['character'] %}
                     {% set fromLocation = dog['fromLocation'] %}
+                    {% set toLocation = dog['toLocation'] %}
                     {% set withDog = dog['withDog'] %}
                     {% set withKids = dog['withKids'] %}
                     {% set explain = dog['explain'] %}
@@ -279,10 +375,19 @@
                         <label for="disabledTextInput" class="form-label">성격</label>
                         <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ dogCharacter }}">
                     </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">현재 임보 위치</label>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ fromLocation }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">입양 가능 지역</label>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ toLocation }}">
+                    </div>
                     <div class="accordion accordion-flush" id="accordionFlushExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="flush-headingOne">
-                                <button class="accordion-button collapsed" type="button" style="background-color: lightgrey"
+                                <button class="accordion-button collapsed" type="button"
+                                        style="background-color: lightgrey"
                                         data-bs-target="#flush-collapseOne" aria-expanded="true"
                                         aria-controls="flush-collapseOne">
                                     Q1. 다른 강아지들과 잘 지내나요?
@@ -293,7 +398,7 @@
                                  data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
                                     <div class="form-check form-check-inline">
-                                    A.
+                                        A.
                                         {% if withDog == '1' %}
                                             {{ dogName }}이 사회성이 부족해요. 사회성에 대한 훈련이 필요해요!
                                         {% elif withDog == '2' %}
@@ -309,7 +414,8 @@
                             </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="flush-headingTwo">
-                                    <button class="accordion-button collapsed" type="button" style="background-color: lightgrey"
+                                    <button class="accordion-button collapsed" type="button"
+                                            style="background-color: lightgrey"
                                             data-bs-target="#flush-collapseTwo" aria-expanded="true"
                                             aria-controls="flush-collapseTwo">
                                         Q2. 아이들과 잘 지내나요?
@@ -322,7 +428,7 @@
 
                                     <div class="accordion-body">
                                         <div class="form-check form-check-inline">
-                                        A.
+                                            A.
 
                                             {% if withDog == '1' %}
                                                 {{ dogName }}이 사회성이 부족해요. 사회성에 대한 훈련이 필요해요!
@@ -339,8 +445,9 @@
                             </div>
                         </div>
                         <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-headingThree" >
-                                <button class="accordion-button collapsed" type="button" style="background-color: lightgrey"
+                            <h2 class="accordion-header" id="flush-headingThree">
+                                <button class="accordion-button collapsed" type="button"
+                                        style="background-color: lightgrey"
                                         data-bs-target="#flush-collapseThree" aria-expanded="true"
                                         aria-controls="flush-collapseThree">
                                     Q3. 다른 특이사항이 있을까요? (임보중인 아이에 대해 자세히 설명해주세요)
@@ -365,6 +472,221 @@
                     </div>
                     </div>
                 {% endfor %}
+
+
+        {% elif dogInfo and written_usr %}
+            {% for dog in dogInfo %}
+                {% set dogIdx = dog['idx'] %}
+                {% set dogPhoto = dog['file'] %}
+                {% set dog_type = dog['dogType'] %}
+                {% set dogName = dog['name'] %}
+                {% set dogAge = dog['age'] %}
+                {% set dogCharacter = dog['character'] %}
+                {% set fromLocation = dog['fromLocation'] %}
+                {% set toLocation = dog['toLocation'] %}
+                {% set withDog = dog['withDog'] %}
+                {% set withKids = dog['withKids'] %}
+                {% set explain = dog['explain'] %}
+                <div class="mb-3">
+                    <img id="img_file" src="..." class="rounded mx-auto d-block mw-fixed" alt=""
+                         onerror="this.src='../static/{{ dogPhoto }}'">
+                    <label for="formFile" class="form-label">강아지 사진</label>
+                    <input class="form-control" type="file" accept="image/*" id="formFile" onchange="loadFile(event)">
+                    <input type="hidden" id="file_already" value="{{ dogPhoto }}">
+                    <input type="hidden" id="dogIdx" value="{{ dogIdx }}">
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="name" value="{{ dogName }}">
+                    <label for="name">강아지 이름</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="age" value="{{ dogAge }}">
+                    <label for="age">강아지 나이</label>
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="dogType">견종</label>
+                    <select class="form-select" id="dogType">
+                        <option selected>{{ dog_type }}</option>
+                        {% for dogType in dogTypes %}
+                            <option> {{ dogType }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="character" value="{{ dogCharacter }}">
+                    <label for="character">강아지 성격</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="fromLocation" value="{{ fromLocation }}">
+                    <label for="fromLocation">현재 임보 위치</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="toLocation" value="{{ toLocation }}">
+                    <label for="toLocation">입양 가능 지역</label>
+                </div>
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                    aria-controls="flush-collapseOne">
+                                Q1. 다른 강아지들과 잘 지내나요?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse"
+                             aria-labelledby="flush-headingOne"
+                             data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <div class="form-check form-check-inline">
+                                    {% if withDog == '1' %}
+                                        <input class="form-check-input" type="radio" name="inline_dog_radio"
+                                               id="with_dog_radio1"
+                                               value="1" checked>
+                                    {% else %}
+                                        <input class="form-check-input" type="radio" name="inline_dog_radio"
+                                               id="with_dog_radio1"
+                                               value="1">
+                                    {% endif %}
+                                    <label class="form-check-label" for="with_dog_radio1">사회성이 부족해요</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    {% if withDog == '2' %}
+                                        <input class="form-check-input" type="radio" name="inline_dog_radio"
+                                               id="with_dog_radio2"
+                                               value="2" checked>
+                                    {% else %}
+                                        <input class="form-check-input" type="radio" name="inline_dog_radio"
+                                               id="with_dog_radio2"
+                                               value="2">
+                                    {% endif %}
+                                    <label class="form-check-label" for="with_dog_radio2">친한 강아지들과만 잘 지내요</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    {% if withDog == '3' %}
+                                        <input class="form-check-input" type="radio" name="inline_dog_radio"
+                                               id="with_dog_radio3"
+                                               value="3" checked>
+                                    {% else %}
+                                        <input class="form-check-input" type="radio" name="inline_dog_radio"
+                                               id="with_dog_radio3"
+                                               value="3">
+                                    {% endif %}
+                                    <label class="form-check-label" for="with_dog_radio3">특정 강아지들과 잘 지내요</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    {% if withDog == '4' %}
+                                        <input class="form-check-input" type="radio" name="inline_dog_radio"
+                                               id="with_dog_radio4"
+                                               value="4" checked>
+                                    {% else %}
+                                        <input class="form-check-input" type="radio" name="inline_dog_radio"
+                                               id="with_dog_radio4"
+                                               value="4">
+                                    {% endif %}
+                                    <label class="form-check-label" for="with_dog_radio4">모든 강아지들과 잘 지내요</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                    aria-controls="flush-collapseTwo">
+                                Q2. 아이들과 잘 지내나요?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                             aria-labelledby="flush-headingTwo"
+                             data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <div class="accordion-body">
+                                    <div class="form-check form-check-inline">
+                                        {% if withKids == '1' %}
+                                            <input class="form-check-input" type="radio" name="inline_kids_radio"
+                                                   id="with_kids_radio1"
+                                                   value="1" checked>
+                                        {% else %}
+                                            <input class="form-check-input" type="radio" name="inline_kids_radio"
+                                                   id="with_kids_radio1"
+                                                   value="1">
+                                        {% endif %}
+                                        <label class="form-check-label" for="with_kids_radio1">사회성이 부족해요</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        {% if withKids == '2' %}
+                                            <input class="form-check-input" type="radio" name="inline_kids_radio"
+                                                   id="with_kids_radio2"
+                                                   value="2" checked>
+                                        {% else %}
+                                            <input class="form-check-input" type="radio" name="inline_kids_radio"
+                                                   id="with_kids_radio2"
+                                                   value="2">
+                                        {% endif %}
+                                        <label class="form-check-label" for="with_kids_radio2">아이들과 거의 잘 못지내요</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        {% if withKids == '3' %}
+                                            <input class="form-check-input" type="radio" name="inline_kids_radio"
+                                                   id="with_kids_radio3"
+                                                   value="3" checked>
+                                        {% else %}
+                                            <input class="form-check-input" type="radio" name="inline_kids_radio"
+                                                   id="with_kids_radio3"
+                                                   value="3">
+                                        {% endif %}
+                                        <label class="form-check-label" for="with_kids_radio3">초등학생 이상 아이들과 잘
+                                            지내요</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        {% if withKids == '4' %}
+                                            <input class="form-check-input" type="radio" name="inline_kids_radio"
+                                                   id="with_kids_radio4"
+                                                   value="4" checked>
+                                        {% else %}
+                                            <input class="form-check-input" type="radio" name="inline_kids_radio"
+                                                   id="with_kids_radio4"
+                                                   value="4">
+                                        {% endif %}
+                                        <label class="form-check-label" for="with_kids_radio4">모든 아이들과 잘 지내요</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                    aria-controls="flush-collapseThree">
+                                Q3. 다른 특이사항이 있을까요? (임보중인 아이에 대해 자세히 설명해주세요)
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse"
+                             aria-labelledby="flush-headingThree"
+                             data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <div class="mb-3">
+                            <textarea class="form-control" id="explain" rows="3">
+                                {{ explain }}
+                            </textarea>
+                                </div>
+                                <button onclick="dogUpdating()" type="button" class="btn btn-primary">수정하기</button>
+                                <button onclick="dogDelete()" type="button" class="btn btn-primary">삭제하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            {% endfor %}
+
+
+
+
+
+
+
+
 
         {% else %}
 

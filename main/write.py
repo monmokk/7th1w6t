@@ -30,9 +30,12 @@ def detailPage(idx):
         written_usr = False
         if dogInfo[0]['insertId'] == payload['id']:
             written_usr = True
+        # if dogInfo == []:
+        #     dogInfo
     except Exception as e:
         print("요기가 문제개", e)
-    return render_template('write.html', dogInfo=dogInfo, written_usr=written_usr)
+    return render_template('write.html', dogInfo=dogInfo, written_usr=written_usr, loginId=payload['id'])
+
 
 
 @blue_write.route('/writing', methods=['GET'])
@@ -40,10 +43,73 @@ def writing():
     dogTypeList = list(findDogType())
     return jsonify({'dogTypes': dogTypeList})
 
+@blue_write.route('/deleting', methods=['POST'])
+def deleting():
+    idx_receive = request.form['idx_give']
+
+    db.dog.delete_one({'idx':int(idx_receive)})
+
+    return jsonify({'msg': '삭제완료'})
+
+
+@blue_write.route('/updating', methods=['POST'])
+def updating():
+    id_receive = request.form["id_give"]
+    idx_receive = request.form["idx_give"]
+    name_receive = request.form["name_give"]
+    age_receive = request.form["age_give"]
+    dogType_receive = request.form["dogType_give"]
+    character_receive = request.form["character_give"]
+    fromLocation_receive = request.form["fromLocation_give"]
+    toLocation_receive = request.form["toLocation_give"]
+    withDog_receive = request.form["withDog_give"]
+    withKids_receive = request.form["withKids_give"]
+    explain_receive = request.form["explain_give"]
+
+
+    try:
+        file = request.files["file_give"]
+        extension = file.filename.split('.')[-1]
+        today = datetime.now()
+        my_time = today.strftime('%Y-%m-%d-%H-%M-%S')
+
+        filename = f'file-{my_time}'
+        save_to = f'main/static/{filename}.{extension}'
+
+        fileN = f'{filename}.{extension}'
+        file.save(save_to)
+    except KeyError:
+        file = request.form["file_give"]
+        fileN = file
+    except Exception as e:
+        print(e)
+
+    doc = {
+        'idx': int(idx_receive),
+        'file': fileN,
+        'name': name_receive,
+        'age': age_receive,
+        'dogType': dogType_receive,
+        'character': character_receive,
+        'fromLocation': fromLocation_receive,
+        'toLocation': toLocation_receive,
+        'withDog': withDog_receive,
+        'withKids': withKids_receive,
+        'explain': explain_receive,
+        'insertId': id_receive
+    }
+
+    db.dog.replace_one({'idx':int(idx_receive)}, doc)
+
+    return jsonify({'msg': f'"{name_receive}" 정보 수정완료'})
+
 
 @blue_write.route('/posting', methods=['POST'])
 def posting():
-    file = request.files["file_give"]
+    try:
+        file = request.files["file_give"]
+    except Exception as e:
+        print(e)
     name_receive = request.form["name_give"]
     age_receive = request.form["age_give"]
     dogType_receive = request.form["dogType_give"]

@@ -24,7 +24,7 @@ def home():
         token_receive = request.cookies.get('mytoken')
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
-        return render_template('index.html')
+        return redirect(url_for("main_listing.main_listing"))
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login.login"))
     except jwt.exceptions.DecodeError:
