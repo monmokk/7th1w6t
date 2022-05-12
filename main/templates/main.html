@@ -61,6 +61,7 @@
             margin: -20px auto 0px auto;
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;
             padding: 30px;
 
         }
@@ -173,6 +174,17 @@
             z-index: 1055 !important;
         }
 
+        .logoutWrap{
+            display: flex;
+            justify-content: flex-end;
+
+        }
+        .logout {
+            margin: 0.5px;
+            transform: scale(0.8);
+
+        }
+
     </style>
     <script>
         function showmodal(param) {
@@ -222,6 +234,10 @@
 </head>
 
 <body>
+<div class="logoutWrap">
+    <button class="button is-danger logout" onclick="sign_out()">로그아웃</button>
+
+</div>
 {% include "header.html" %}
 <div class="buttons">
     <button type="button" class="button is-danger is-light" data-bs-toggle="modal"
