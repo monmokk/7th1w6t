@@ -180,6 +180,45 @@
         }
 
     </script>
+    <script>
+        $(document).ready(function () {
+            listing()
+        })
+        function listing(){
+           $.ajax({
+            type: "GET",
+            url: "/listing",
+            data: {},
+            success: function (response) {
+                let dog = response['all_lists']
+                console.log(dog)
+                for(let i = 0; i < dog.length; i++){
+                    let dogPhoto = dog[i]['file']
+                    let dogType = dog[i]['dogType']
+                    let dogName = dog[i]['name']
+                    let dogAge = dog[i]['age']
+                    let dogIdx = dog[i]['idx']
+
+                    let temp_html = `<div class="card" data-bs-toggle="modal" onclick="location.href='../write/${dogIdx}'">
+                                        <img src='../static/${dogPhoto}' alt="" class="card_img">
+                                        <div class="card_desc">
+
+                                            <h3>${dogName}</h3>
+
+                                            <ul>
+                                                <li class='name'> 나이: ${dogAge}</li>
+                                                <li> 견종: ${dogType}</li>
+                                            </ul>
+
+                                        </div>
+                                    </div>`
+                    $("#card-box").prepend(temp_html)
+                }
+            }
+        })
+        }
+
+    </script>
 </head>
 
 <body>
@@ -207,28 +246,28 @@
     </div>
 </div>
 <div class="wrap" id="card-box">
-    {% for dog in dog_list %}
-        {% set dogPhoto = dog['file'] %}
-        {% set dogType = dog['dogType'] %}
-        {% set dogName = dog['name'] %}
-        {% set dogAge = dog['age'] %}
-        {% set dogIdx = dog['idx'] %}
-
-        <div class="card" data-bs-toggle="modal" onclick="location.href='../write/{{ dogIdx }}'">
-            <img src='../static/{{ dogPhoto }}' alt="" class="card_img">
-            <div class="card_desc">
-
-                <h3>{{ dogName }}</h3>
-
-                <ul>
-                    <li class='name'> 나이: {{ dogAge }}</li>
-                    <li> 견종: {{ dogType }}</li>
-                </ul>
-
-            </div>
-        </div>
-
-    {% endfor %}
+{#    {% for dog in dog_list %}#}
+{#        {% set dogPhoto = dog['file'] %}#}
+{#        {% set dogType = dog['dogType'] %}#}
+{#        {% set dogName = dog['name'] %}#}
+{#        {% set dogAge = dog['age'] %}#}
+{#        {% set dogIdx = dog['idx'] %}#}
+{##}
+{#        <div class="card" data-bs-toggle="modal" onclick="location.href='../write/{{ dogIdx }}'">#}
+{#            <img src='../static/{{ dogPhoto }}' alt="" class="card_img">#}
+{#            <div class="card_desc">#}
+{##}
+{#                <h3>{{ dogName }}</h3>#}
+{##}
+{#                <ul>#}
+{#                    <li class='name'> 나이: {{ dogAge }}</li>#}
+{#                    <li> 견종: {{ dogType }}</li>#}
+{#                </ul>#}
+{##}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#    {% endfor %}#}
 
 
 </div>
