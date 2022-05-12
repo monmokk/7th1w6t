@@ -351,7 +351,7 @@
                         <div class="container">
                             <div class="file ">
                                 <img id="img_file" src='../static/{{ dogPhoto }}' class="mx-auto d-block mw-fixed"
-                                     alt="">
+                                     onerror="this.src='../static/onerror_.jpg'" alt="">
 
                             </div>
 
@@ -489,7 +489,7 @@
                 {% set explain = dog['explain'] %}
                 <div class="mb-3">
                     <img id="img_file" src="..." class="rounded mx-auto d-block mw-fixed" alt=""
-                         onerror="this.src='../static/{{ dogPhoto }}'">
+                         onerror="this.src='../static/onerror_.jpg'" src='../static/{{ dogPhoto }}'>
                     <label for="formFile" class="form-label">강아지 사진</label>
                     <input class="form-control" type="file" accept="image/*" id="formFile" onchange="loadFile(event)">
                     <input type="hidden" id="file_already" value="{{ dogPhoto }}">
